@@ -195,7 +195,11 @@ node_t *rbtree_min(const rbtree *t) {
 
 node_t *rbtree_max(const rbtree *t) {
   // TODO: implement find
-  return t->root;
+  node_t *max_node = t->root;
+  while(max_node->right != t->nil){
+    max_node = max_node->right;
+  }
+  return max_node;
 }
 
 int rbtree_erase(rbtree *t, node_t *p) {

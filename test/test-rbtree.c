@@ -311,11 +311,8 @@ void test_to_array_suite() {
 }
 
 void test_find_erase(rbtree *t, const key_t *arr, const size_t n) {
-  printf("테스트0");
   for (int i = 0; i < n; i++) {
-    printf("테스트1");
     node_t *p = rbtree_insert(t, arr[i]);
-    printf("테스트2");
     assert(p != NULL);
   }
 
@@ -375,8 +372,8 @@ int main(void) {
   test_find_single(512, 1024);
   test_erase_root(128);
   // test_find_erase_fixed();
-  // test_minmax_suite();
-  // test_to_array_suite();
+  test_minmax_suite();
+  test_to_array_suite();
   // test_distinct_values();
   // test_duplicate_values();
   // test_multi_instance();
