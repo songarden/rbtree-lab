@@ -13,8 +13,8 @@ void rb_delete_fixup(rbtree *t, node_t *n);
 int delete_node(rbtree *t, node_t *node);
 
 rbtree *new_rbtree(void) {
-  rbtree *p = (rbtree *)calloc(1, sizeof(rbtree));
-  node_t *nilNode = (node_t *)calloc(1, sizeof(node_t));
+  rbtree *p = (rbtree *)calloc(2, sizeof(rbtree));
+  node_t *nilNode = (node_t *)calloc(10, sizeof(node_t));
   nilNode->color = RBTREE_BLACK;
   p -> nil = nilNode;
   p -> root = nilNode;
@@ -206,7 +206,7 @@ int rbtree_erase(rbtree *t, node_t *p) {
   // TODO: implement erase
   node_t *y = p;
   color_t eNodeOri_C = p->color;
-  node_t *x;
+  node_t *x = p->right;
   if(p->left == t->nil){
     x = p->right;
     rb_transplant(t,p,p->right);
@@ -237,12 +237,13 @@ int rbtree_erase(rbtree *t, node_t *p) {
     rb_delete_fixup(t,x);
   }
   t->root->parent = t->nil;
+  free(p);
   return 0;
 }
 
 node_t *sub_rbTree_min(rbtree *t, node_t *n){
   node_t *sub_min_node = n;
-  while(sub_min_node != t->nil){
+  while(sub_min_node->left != t->nil){
     sub_min_node = sub_min_node->left;
   }
   return sub_min_node;
