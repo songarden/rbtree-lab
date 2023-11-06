@@ -9,6 +9,8 @@ void right_rotate(rbtree *t, node_t *n);
 void rb_transplant(rbtree *t, node_t *u, node_t *v);
 node_t *sub_rbTree_min(rbtree *t, node_t *n);
 void rb_delete_fixup(rbtree *t, node_t *n);
+void insert_arr(rbtree *t, const key_t *arr, const size_t n);
+int dfs_tree(const rbtree *t, node_t *n,key_t *arr, int index);
 
 int delete_node(rbtree *t, node_t *node);
 
@@ -320,7 +322,28 @@ void rb_delete_fixup(rbtree *t, node_t *n){
   n->color = RBTREE_BLACK;
 }
 
+void insert_arr(rbtree *t, const key_t *arr, const size_t n){
+  for(int i=0;i<n;i++){
+    rbtree_insert(t,arr[i]);
+  }
+}
+
 int rbtree_to_array(const rbtree *t, key_t *arr, const size_t n) {
-  // TODO: implement to_array
+  dfs_tree(t,t->root,arr,0);
   return 0;
+}
+
+int dfs_tree(const rbtree *t, node_t *n,key_t *arr, int index){
+  if(n->left != t->nil){
+    index = dfs_tree(t,n->left,arr,index);
+  }
+
+  arr[index] = n->key;
+  index ++;
+
+  if(n->right != t->nil){
+    index = dfs_tree(t,n->right,arr,index);
+  }
+
+  return index;
 }
